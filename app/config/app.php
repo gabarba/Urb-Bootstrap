@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://localhost/laravel-bootstrap/',
+	'url' => 'http://localhost/urb-bootstrap/',
 
 	/*
 	|--------------------------------------------------------------------------

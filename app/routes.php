@@ -11,7 +11,43 @@
 |
 */
 
+/*
 Route::get('/', function()
 {
 	return View::make('hello');
+});
+
+*/
+
+Route::get('/', function()
+{
+	/*
+	Sentry::getUserProvider()->create(array(
+		'email' => 'george@agenaastro.com',
+		'password' => 'gabmaster',
+		'first_name' => 'George',
+		'last_name' => 'Barba', 
+		'activated' => 1));
+
+	Sentry::getGroupProvider()->create(array(
+		'name' => 'Admin', 
+		'permissions' => array('admin'=>1)
+		));
+	$adminUser = Sentry::getUserProvider()->findByLogin('george@agenaastro.com');
+	$adminGroup = Sentry::getGroupProvider()->findByName('Admin');
+	$adminUser->addGroup($adminGroup);
+	*/
+	return Product::with('reviews')->get();
+});
+
+Route::get('admin/logout',  array('as' => 'admin.logout',      'uses' => 'App\Controllers\Admin\AuthController@getLogout'));
+Route::get('admin/login',   array('as' => 'admin.login',       'uses' => 'App\Controllers\Admin\AuthController@getLogin'));
+Route::post('admin/login',  array('as' => 'admin.login.post',  'uses' => 'App\Controllers\Admin\AuthController@postLogin'));
+
+Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function()
+{
+        Route::any('/',                'App\Controllers\Admin\PagesController@index');
+        Route::resource('products',    'App\Controllers\Admin\ProductsController');
+        Route::resource('reviews',     'App\Controllers\Admin\ReviewsController');
+        Route::resource('pages',       'App\Controllers\Admin\PagesController');
 });
