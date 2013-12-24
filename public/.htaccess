@@ -5,7 +5,7 @@
 
     RewriteEngine On
 
-    RewriteBase /urb-bootstrap/
+    RewriteBase /urb-bootstrap
     # Redirect Trailing Slashes...
 	RewriteRule ^(.*)/$ /$1 [L,R=301]
 

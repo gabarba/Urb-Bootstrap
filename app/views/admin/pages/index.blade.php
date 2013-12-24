@@ -15,7 +15,7 @@
                         @foreach ($pages as $page)
                                 <tr>
                                         <td>{{ $page->id }}</td>
-                                        <td><a href="{{ URL::route('admin.pages.show', $page->id) }}">{{ $page->title }}</a></td>
+                                        <td><a href="{{ URL::route('pages.show', $page->id) }}">{{ $page->title }}</a></td>
                                         <td>{{ $page->created_at }}</td>
                                         <td>
                                                 <a href="{{ URL::route('admin.pages.edit', $page->id) }}" class="btn btn-success btn-mini pull-left">Edit</a>

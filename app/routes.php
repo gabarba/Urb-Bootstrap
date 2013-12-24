@@ -19,7 +19,7 @@ Route::get('/', function()
 
 */
 
-Route::get('/', function()
+Route::get('/', array('as'=>'index',function()
 {
 	/*
 	Sentry::getUserProvider()->create(array(
@@ -37,17 +37,30 @@ Route::get('/', function()
 	$adminGroup = Sentry::getGroupProvider()->findByName('Admin');
 	$adminUser->addGroup($adminGroup);
 	*/
-	return Product::with('reviews')->get();
-});
+	return View::make('pages.index');
+}));
 
+///////////////////////// PUBLIC ROUTES ////////////////////////////////////////////////////////////////
+
+// Page Routes
+Route::get('pages/{id}', array('as' => 'pages.show', 'uses' => 'App\Controllers\PagesController@show'));
+
+// Product Routes
+Route::get('products', array('as' =>'products.index', 'uses' =>'App\Controllers\ProductsController@index'));
+Route::get('products/{id}', array('as' =>'products.show', 'uses' =>'App\Controllers\ProductsController@show'));
+
+// Admin Login Routes
 Route::get('admin/logout',  array('as' => 'admin.logout',      'uses' => 'App\Controllers\Admin\AuthController@getLogout'));
 Route::get('admin/login',   array('as' => 'admin.login',       'uses' => 'App\Controllers\Admin\AuthController@getLogin'));
 Route::post('admin/login',  array('as' => 'admin.login.post',  'uses' => 'App\Controllers\Admin\AuthController@postLogin'));
 
+
+///////////////////////// ADMIN ROUTES ////////////////////////////////////////////////////////////////
+
 Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function()
 {
-        Route::any('/',                'App\Controllers\Admin\PagesController@index');
-        Route::resource('products',    'App\Controllers\Admin\ProductsController');
-        Route::resource('reviews',     'App\Controllers\Admin\ReviewsController');
-        Route::resource('pages',       'App\Controllers\Admin\PagesController');
+        Route::any('/',                'App\Controllers\PagesController@index');
+        Route::resource('products',    'App\Controllers\ProductsController');
+        Route::resource('reviews',     'App\Controllers\ReviewsController');
+        Route::resource('pages',       'App\Controllers\PagesController');
 });

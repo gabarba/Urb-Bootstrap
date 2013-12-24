@@ -6,17 +6,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{{ URL::route('admin.pages.index') }}">URB Reviews Admin</a>
+          <a class="navbar-brand" href="{{ URL::route('index') }}">URB Reviews</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#products">Products  </a></li>
             <li><a href="#reviews">Reviews</a></li>
-            <li><a href="#moderation">Moderation</a></li>
-            <li><a href="#users">Users</a></li>
-            <li><a href="{{ URL::route('admin.pages.index') }}">Pages</a></li>
-            <li><a href="#settings">Settings</a></li>
           </ul>
         </div><!--/.navbar-collapse -->
       </div>
