@@ -1,5 +1,5 @@
 <?php
-
+use App\Models\Product;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -37,7 +37,9 @@ Route::get('/', array('as'=>'index',function()
 	$adminGroup = Sentry::getGroupProvider()->findByName('Admin');
 	$adminUser->addGroup($adminGroup);
 	*/
-	return View::make('pages.index');
+
+	//return View::make('pages.index');
+	return Product::all();
 }));
 
 ///////////////////////// PUBLIC ROUTES ////////////////////////////////////////////////////////////////

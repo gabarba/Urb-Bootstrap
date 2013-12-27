@@ -22,11 +22,11 @@ class ProductsController extends \BaseController {
         {
                 if (Sentry::check()) 
                 {
-                        return \View::make('products.show')->with('page', Page::find($id));
+                        return \View::make('products.show')->with('product', Product::find($id));
                 }
                 else 
                 {
-                       return \View::make('admin.products.show')->with('page', Page::find($id));
+                       return \View::make('admin.products.show')->with('product', Product::find($id));
                 }
                 
         }
@@ -38,39 +38,44 @@ class ProductsController extends \BaseController {
  
         public function store()
         {
-                $page = new Product;
-                $page->title = Input::get('title');
-                $page->slug = Str::slug(Input::get('title'));
-                $page->content = Input::get('content');
-                $page->user_id = Sentry::getUser()->id;
-                $page->save();
+                $Product = new Product;
+                $Product->name = Input::get('name');
+                $Product->brand = Input::get('brand');
+                $Product->manufacturer_part_no = Input::get('manufacturer_part_no');
+                $Product->sku = Input::get('sku');
+                $Product->asin = Input::get('asin');
+                $Product->upc_isbn = Input::get('upc_isbn');
+                $Product->description = Input::get('description');
+                $Product->save();
  
-                return Redirect::route('admin.products.edit', $page->id);
+                return Redirect::route('admin.products.edit', $Product->id);
         }
  
         public function edit($id)
         {
-                return \View::make('admin.products.edit')->with('page', Page::find($id));
+                return \View::make('admin.products.edit')->with('product', Product::find($id));
         }
  
         public function update($id)
         {
-                $page = Page::find($id);
-                $page->title = Input::get('title');
-                $page->slug = Str::slug(Input::get('title'));
-                $page->content = Input::get('content');
-                $page->user_id = Sentry::getUser()->id;
-                $page->save();
+                $Product = Product::find($id);
+                $Product->name = Input::get('name');
+                $Product->brand = Input::get('brand');
+                $Product->manufacturer_part_no = Input::get('manufacturer_part_no');
+                $Product->sku = Input::get('sku');
+                $Product->asin = Input::get('asin');
+                $Product->upc_isbn = Input::get('upc_isbn');
+                $Product->description = Input::get('description');
+                $Product->save();
                 
-                //Notification::success('The page was saved.');
 
-                return Redirect::route('admin.products.edit', $page->id);
+                return Redirect::route('admin.products.edit', $Product->id);
         }
  
         public function destroy($id)
         {
-                $page = Page::find($id);
-                $page->delete();
+                $Product = Product::find($id);
+                $Product->delete();
  
                 return Redirect::route('admin.products.index');
         }

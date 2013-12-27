@@ -1,6 +1,6 @@
-<?php
+<?php namespace App\Models;
 
-class Product extends Eloquent {
+class Product extends \Eloquent {
 
 	/**
 	 * The database table used by the model.
@@ -22,8 +22,20 @@ class Product extends Eloquent {
 	 * 
 	 * @return collection of reviews related to product
 	 */
-	 public function reviews(){
-	 	return $this->hasMany('review');
+	 public function reviews()
+	 {
+	 	return $this->hasMany('Review');
+	 }
+
+	 /**
+	 * Retrieve related product categories
+	 * 
+	 * @return collection of categories related to product
+	 */
+
+	 public function categories() 
+	 {
+	 	return $this->belongsToMany('Category');
 	 }
 
 }
