@@ -70,7 +70,7 @@ return array(
 		|
 		*/
 
-		'key' => '0iLunQojcKxiko6HopCjIPJTxDsgtbxN',
+		'key' => 'cartalyst_sentry',
 
  	),
 

@@ -70,7 +70,7 @@ return array(
 	/*
 	|--------------------------------------------------------------------------
 	| Autoloaded Service Providers
-	|--------------------------------------------------------------------------
+	|--------------------------------------------------------------------------g
 	|
 	| The service providers listed here will be automatically loaded on the
 	| request to your application. Feel free to add your own services to
@@ -108,6 +108,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Cartalyst\Sentry\SentryServiceProvider',
 		'Profiler\ProfilerServiceProvider',
+		'Way\Generators\GeneratorsServiceProvider',
 
 
 	),

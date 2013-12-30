@@ -2,6 +2,7 @@
  
 @section('content')
         <h1> Welcome to URB Reviews Dashboard</h1>
+         <a href="{{ URL::route('admin.products.create') }}" class="btn btn-success btn-mini pull-left">Create</a>
         <table class="table table-striped">
                 <thead>
                         <tr>

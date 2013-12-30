@@ -1,5 +1,6 @@
 <?php
 use App\Models\Product;
+use App\Models\ProductEav;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -39,7 +40,8 @@ Route::get('/', array('as'=>'index',function()
 	*/
 
 	//return View::make('pages.index');
-	return Product::all();
+	return Product::with('attributes')->get();
+	//return ProductEav::all();
 }));
 
 ///////////////////////// PUBLIC ROUTES ////////////////////////////////////////////////////////////////
@@ -61,8 +63,13 @@ Route::post('admin/login',  array('as' => 'admin.login.post',  'uses' => 'App\Co
 
 Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function()
 {
-        Route::any('/',                'App\Controllers\PagesController@index');
-        Route::resource('products',    'App\Controllers\ProductsController');
-        Route::resource('reviews',     'App\Controllers\ReviewsController');
-        Route::resource('pages',       'App\Controllers\PagesController');
+        Route::any('/',                				'App\Controllers\PagesController@index');
+        Route::resource('products',    				'App\Controllers\ProductsController');
+        Route::resource('reviews',     				'App\Controllers\ReviewsController');
+        Route::resource('pages',       				'App\Controllers\PagesController');
+       	Route::resource('product-attributes',       'App\Controllers\ProductAttributesController');
 });
+
+
+// App Error Routes
+
