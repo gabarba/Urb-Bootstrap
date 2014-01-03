@@ -3,7 +3,11 @@
 @section('content')
  
         <h2>Edit Product</h2>
- 
+         @if($errors) 
+               @foreach($errors->all() as $error)
+                        <div class="alert alert-danger">{{$error}}</div>
+               @endforeach
+        @endif
         {{ Form::model($product, array('method' => 'put', 'route' => array('admin.products.update', $product->id))) }}
                 <div class="form-group">
                         {{ Form::label('name', 'Name') }}

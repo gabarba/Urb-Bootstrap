@@ -1,9 +1,7 @@
-<?php namespace App\Controllers;
+<?php 
  
-use App\Models\Product;
-use Input, Redirect, Sentry, Str;
  
-class ProductsController extends \BaseController {
+class ProductsController extends BaseController {
  
         public function index()
         {
@@ -38,17 +36,14 @@ class ProductsController extends \BaseController {
  
         public function store()
         {
-                $Product = new Product;
-                $Product->name = Input::get('name');
-                $Product->brand = Input::get('brand');
-                $Product->manufacturer_part_no = Input::get('manufacturer_part_no');
-                $Product->sku = Input::get('sku');
-                $Product->asin = Input::get('asin');
-                $Product->upc_isbn = Input::get('upc_isbn');
-                $Product->description = Input::get('description');
-                $Product->save();
- 
-                return Redirect::route('admin.products.edit', $Product->id);
+                $Product = new Product;              
+                
+                if($Product->save()) 
+                {
+                    return Redirect::route('admin.products.edit', $Product->id);
+                }
+                    return Redirect::route('admin.products.create')->withErrors($Product->errors()->all());   
+                
         }
  
         public function edit($id)
@@ -59,6 +54,7 @@ class ProductsController extends \BaseController {
         public function update($id)
         {
                 $Product = Product::find($id);
+                /*
                 $Product->name = Input::get('name');
                 $Product->brand = Input::get('brand');
                 $Product->manufacturer_part_no = Input::get('manufacturer_part_no');
@@ -66,10 +62,13 @@ class ProductsController extends \BaseController {
                 $Product->asin = Input::get('asin');
                 $Product->upc_isbn = Input::get('upc_isbn');
                 $Product->description = Input::get('description');
-                $Product->save();
-                
+                */
 
-                return Redirect::route('admin.products.edit', $Product->id);
+                if($Product->updateUniques()) 
+                {
+                    return Redirect::route('admin.products.index');
+                }
+                    return Redirect::route('admin.products.edit',$Product->id)->withErrors($Product->errors()->all());   
         }
  
         public function destroy($id)

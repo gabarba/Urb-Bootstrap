@@ -1,6 +1,5 @@
 <?php
-use App\Models\Product;
-use App\Models\ProductEav;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -40,8 +39,10 @@ Route::get('/', array('as'=>'index',function()
 	*/
 
 	//return View::make('pages.index');
-	return Product::with('attributes')->get();
-	//return ProductEav::all();
+	//return Product::with('attributes.attribute')->where('id',1)->get(); 
+	//return Product::find(1)->attributesToArray();
+	//return ProductAttributes::all()->lists('code');
+	return array_merge(Product::find(1)->returnFillable(),ProductAttributes::all()->lists('code'));
 }));
 
 ///////////////////////// PUBLIC ROUTES ////////////////////////////////////////////////////////////////
@@ -50,8 +51,8 @@ Route::get('/', array('as'=>'index',function()
 Route::get('pages/{id}', array('as' => 'pages.show', 'uses' => 'App\Controllers\PagesController@show'));
 
 // Product Routes
-Route::get('products', array('as' =>'products.index', 'uses' =>'App\Controllers\ProductsController@index'));
-Route::get('products/{id}', array('as' =>'products.show', 'uses' =>'App\Controllers\ProductsController@show'));
+Route::get('products', array('as' =>'products.index', 'uses' =>'ProductsController@index'));
+Route::get('products/{id}', array('as' =>'products.show', 'uses' =>'ProductsController@show'));
 
 // Admin Login Routes
 Route::get('admin/logout',  array('as' => 'admin.logout',      'uses' => 'App\Controllers\Admin\AuthController@getLogout'));
@@ -64,10 +65,11 @@ Route::post('admin/login',  array('as' => 'admin.login.post',  'uses' => 'App\Co
 Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function()
 {
         Route::any('/',                				'App\Controllers\PagesController@index');
-        Route::resource('products',    				'App\Controllers\ProductsController');
+        Route::resource('products',    				'ProductsController');
         Route::resource('reviews',     				'App\Controllers\ReviewsController');
         Route::resource('pages',       				'App\Controllers\PagesController');
        	Route::resource('product-attributes',       'App\Controllers\ProductAttributesController');
+       	Route::controller('import',                 'ImportController');
 });
 
 

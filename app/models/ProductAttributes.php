@@ -1,10 +1,15 @@
-<?php namespace App\Models;
+<?php 
 
-class ProductAttributes extends \Eloquent {
+class ProductAttributes extends Eloquent {
 
 	public $timestamps = false;
 	
 	protected $guarded = array();
 
 	public static $rules = array();
+
+	 public function values() 
+	 {
+	 	return $this->hasMany('ProductEav');
+	 }
 }

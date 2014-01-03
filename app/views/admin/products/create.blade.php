@@ -3,9 +3,14 @@
 @section('content')
  
         <h2>Create New Product</h2>
- 
+        @if($errors) 
+               @foreach($errors->all() as $error)
+                        <div class="alert alert-danger">{{$error}}</div>
+               @endforeach
+        @endif
+
         {{ Form::open(array('route' => 'admin.products.store')) }}
- 
+               
                 <div class="form-group">
                         {{ Form::label('name', 'Name') }}
                         {{ Form::text('name',null,array('class'=>'form-control')) }}

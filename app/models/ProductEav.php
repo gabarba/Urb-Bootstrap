@@ -1,6 +1,6 @@
-<?php namespace App\Models;
+<?php 
 
-class ProductEav extends \Eloquent {
+class ProductEav extends Eloquent {
 
 	/**
 	 * The database table used by the model.
@@ -15,12 +15,12 @@ class ProductEav extends \Eloquent {
 
 	public static $rules = array();
 
-	public function get_attribute() 
+	public function attribute() 
 	{
-		return $this->belongsTo('ProductAttribute');
+		return $this->belongsTo('ProductAttributes','product_attribute_id');
 	}
 
-	public function get_product() 
+	public function product() 
 	{
 		return $this->belongsTo('Product');
 	}
