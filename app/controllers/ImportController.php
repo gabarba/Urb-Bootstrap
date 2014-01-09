@@ -57,7 +57,7 @@ class ImportController extends BaseController {
             			$i++;
             		}
 
-            		$importArray[] = $data;
+            		$importArray[] = $this->array_key_whitelist($data,$attributes);
             	}
 
             }
@@ -68,5 +68,11 @@ class ImportController extends BaseController {
 
 
 	}
+
+
+    public function array_key_whitelist($array, $whitelist = array()) 
+    {
+        return array_intersect_key($array, array_flip($whitelist));   
+    }
 
 }
