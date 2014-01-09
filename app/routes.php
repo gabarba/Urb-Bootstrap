@@ -42,7 +42,8 @@ Route::get('/', array('as'=>'index',function()
 	//return Product::with('attributes.attribute')->where('id',1)->get(); 
 	//return Product::find(1)->attributesToArray();
 	//return ProductAttributes::all()->lists('code');
-	return array_merge(Product::find(1)->returnFillable(),ProductAttributes::all()->lists('code'));
+	//return array_merge(Product::find(1)->returnFillable(),ProductAttributes::all()->lists('code'));
+	return ProductAttributes::all(array('id','code'));
 }));
 
 ///////////////////////// PUBLIC ROUTES ////////////////////////////////////////////////////////////////
