@@ -67,7 +67,7 @@ class ImportController extends BaseController {
                     if($product) 
                     {
                         $product->fill($this->array_key_whitelist($data,$productAttributes));
-                        $product->save();
+                        $product->updateUniques();
                     }
                     /*
             		$importArray[] = array(
