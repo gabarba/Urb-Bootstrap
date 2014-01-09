@@ -8,7 +8,7 @@
 	<h1>Import CSV File </h1>
 <div class="row">
 	<div class="col-md-3">
-	{{Form::open(array('url'=>'import','files'=>true))}}
+	{{Form::open(array('url'=>'admin/import','files'=>true))}}
 	<div class="form-group">
 		{{Form::label('delimiter', 'Delimiter')}}
 		{{Form::text('delimiter',',', array('class'=>'form-control'))}}

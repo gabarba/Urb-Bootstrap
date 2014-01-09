@@ -2,7 +2,7 @@
 
 class ImportController extends BaseController {
 
-	protected $_importPath = 'J:\wamp\www\Urb-Bootstrap\app\storage\csv_import';
+	protected $_importPath = 'J:\wamp\www\Urb-Bootstrap\app\storage\csv_import\\';
 
 	public function getIndex()
 	{
@@ -35,8 +35,35 @@ class ImportController extends BaseController {
 
             $errors = array();
 
-            $eav_attributes = ProductAttributes::all()->lists('code');
+            // get attribute codes for all product attributes
+            $attributes = array_merge(
+	            			Product::find(1)->returnFillable(), // get core product attributes
+	            			ProductAttributes::all()->lists('code') // get eav product attributes
+            			); 
+            $csvHeader = array();
+            $importArray = array();
+            $csvAssocArray = array();
 
+            foreach($csvFile as $key =>$row) {
+            	if($key == 0) {
+            		$csvHeader = $row;
+            		$csvAssocArray = array_flip($row);
+            	} else {
+            		
+            		$data = array();
+            		$i = 0;
+            		foreach($csvAssocArray as $key => $value) {
+            			$data[$key] = $row[$i];
+            			$i++;
+            		}
+
+            		$importArray[] = $data;
+            	}
+
+            }
+				
+			var_dump($importArray); 
+			return View::make('admin.import.index')->with('hasFile',$hasFile);
         }
 
 
