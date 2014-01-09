@@ -44,6 +44,7 @@ class ImportController extends BaseController {
             $productAttributes = Product::find(1)->returnFillable();
             $productEavAttributes = ProductAttributes::all()->lists('code');
 
+            $productEavAttributesIdAssoc = ProductAttributes::all(array('id','code'))->toArray();
 
             $csvHeader = array();
             $importArray = array();
@@ -61,16 +62,25 @@ class ImportController extends BaseController {
             			$data[$key] = $row[$i];
             			$i++;
             		}
-                    
+                    $product = Product::where('sku',$data['sku'])->get();
+
+                    if($product) 
+                    {
+                        $product->fill($this->array_key_whitelist($data,$productAttributes));
+                        $product->save();
+                    }
+                    /*
             		$importArray[] = array(
                                 'product'  => $this->array_key_whitelist($data,$productAttributes),
                                 'product_eav'  => $this->array_key_whitelist($data,$productEavAttributes),
                         );
+                        */
+                    $importArray[] =  $this->array_key_whitelist($data,$productAttributes);
             	}
 
             }
 				
-			var_dump($importArray); 
+			Product::insert($importArray);
 			return View::make('admin.import.index')->with('hasFile',$hasFile);
         }
 

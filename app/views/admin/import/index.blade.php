@@ -1,7 +1,11 @@
 @extends('admin.layouts.base')
 
 @section('content')
-
+ @if($errors) 
+               @foreach($errors->all() as $error)
+                        <div class="alert alert-danger">{{$error}}</div>
+               @endforeach
+        @endif
 @if($hasFile)
 	File Recieved and Import Process Started	
 @endif
