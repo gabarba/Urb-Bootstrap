@@ -40,6 +40,11 @@ class ImportController extends BaseController {
 	            			Product::find(1)->returnFillable(), // get core product attributes
 	            			ProductAttributes::all()->lists('code') // get eav product attributes
             			); 
+
+            $productAttributes = Product::find(1)->returnFillable();
+            $productEavAttributes = ProductAttributes::all()->lists('code');
+
+
             $csvHeader = array();
             $importArray = array();
             $csvAssocArray = array();
@@ -56,8 +61,11 @@ class ImportController extends BaseController {
             			$data[$key] = $row[$i];
             			$i++;
             		}
-
-            		$importArray[] = $this->array_key_whitelist($data,$attributes);
+                    
+            		$importArray[] = array(
+                                'product'  => $this->array_key_whitelist($data,$productAttributes),
+                                'product_eav'  => $this->array_key_whitelist($data,$productEavAttributes),
+                        );
             	}
 
             }
