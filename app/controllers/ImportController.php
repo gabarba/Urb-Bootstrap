@@ -75,7 +75,10 @@ class ImportController extends BaseController {
                                 'product_eav'  => $this->array_key_whitelist($data,$productEavAttributes),
                         );
                         */
-                    $importArray[] =  $this->array_key_whitelist($data,$productAttributes);
+                    else {
+                        $importArray[] =  $this->array_key_whitelist($data,$productAttributes);
+                    }
+                    
             	}
 
             }
