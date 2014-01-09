@@ -62,7 +62,7 @@ class ImportController extends BaseController {
             			$data[$key] = $row[$i];
             			$i++;
             		}
-                    $product = Product::where('sku',$data['sku'])->get();
+                    $product = Product::where('sku',$data['sku'])->first();
 
                     if($product) 
                     {
