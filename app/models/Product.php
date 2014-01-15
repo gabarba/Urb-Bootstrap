@@ -70,6 +70,20 @@ class Product extends \LaravelBook\Ardent\Ardent {
 
 	 public function attributes() 
 	 {
-	 	return $this->hasMany('ProductEav');
+	 	return $this->hasMany('ProductEav','product_id');
 	 }
+
+
+	 // Update Ardent Save function to always apply save on update for unique validation to fix FrozenNode/Administrator packages
+	 // that only uses the save method.
+	 public function save(array $rules = array(),
+        array $customMessages = array(),
+        array $options = array(),
+        Closure $beforeSave = null,
+        Closure $afterSave = null
+    ) {
+        $rules = $this->buildUniqueExclusionRules($rules);
+        
+        return parent::save($rules, $customMessages, $options, $beforeSave, $afterSave);
+    }
 }

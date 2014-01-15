@@ -20,11 +20,11 @@ class ProductsController extends BaseController {
         {
                 if (Sentry::check()) 
                 {
-                        return \View::make('products.show')->with('product', Product::find($id));
+                        return \View::make('products.show')->with('product', Product::with('attributes.attribute')->where('id',$id)->first());
                 }
                 else 
                 {
-                       return \View::make('admin.products.show')->with('product', Product::find($id));
+                       return \View::make('products.show')->with('product',Product::with('attributes.attribute')->where('id',$id)->first());
                 }
                 
         }

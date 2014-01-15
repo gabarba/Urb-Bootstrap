@@ -37,11 +37,11 @@ class ImportController extends BaseController {
 
             // get attribute codes for all product attributes
             $attributes = array_merge(
-	            			Product::find(1)->returnFillable(), // get core product attributes
+	            			App::make('Product')->returnFillable(), // get core product attributes
 	            			ProductAttributes::all()->lists('code') // get eav product attributes
             			); 
 
-            $productAttributes = Product::find(1)->returnFillable();
+            $productAttributes = App::make('Product')->returnFillable();
             $productEavAttributes = ProductAttributes::all()->lists('code');
 
             $productEavAttributesIdAssoc = ProductAttributes::all(array('id','code'))->toArray();
@@ -68,6 +68,8 @@ class ImportController extends BaseController {
                     {
                         $product->fill($this->array_key_whitelist($data,$productAttributes));
                         $product->updateUniques();
+
+                        $this->save_product_eav($this->array_key_whitelist($data,$productEavAttributes), $product->id, $productEavAttributesIdAssoc);
                     }
                     /*
             		$importArray[] = array(
@@ -82,9 +84,14 @@ class ImportController extends BaseController {
             	}
 
             }
-				
-			Product::insert($importArray);
-			return View::make('admin.import.index')->with('hasFile',$hasFile);
+			$insertChunkedArray = array_chunk($importArray,50,true);
+
+            foreach($insertChunkedArray as $dataArray) {
+                Product::insert($dataArray);
+            }
+			//Product::insert($importArray);
+            return Redirect::route('admin_page', array('page' => 'admin.import.index'))->with('hasFile', $hasFile);
+			//return View::make('admin.import.index')->with('hasFile',$hasFile);
         }
 
 
@@ -96,4 +103,40 @@ class ImportController extends BaseController {
         return array_intersect_key($array, array_flip($whitelist));   
     }
 
+   public function save_product_eav($product_eav, $product_id, $attribute_code_id) 
+   {
+        $dataImport = array();
+        $attributeIds = $this->product_code_id_assoc($attribute_code_id);
+        foreach(array_filter($product_eav) as $key => $value) 
+        {
+
+            $eav = ProductEav::where('product_id',$product_id)->where('product_attribute_id',$attributeIds[$key])->first();
+
+            if($eav) {
+                $eav->value = $value;
+                $eav->save();
+            } else {
+                $dataImport[] = array(
+                    'product_id' => $product_id,
+                    'product_attribute_id' => $attributeIds[$key],
+                    'value' => $value
+                );
+            }
+        }
+       if(!empty($dataImport)) 
+       {
+        ProductEav::insert(array_filter($dataImport));
+       }
+        
+   }
+
+   public function product_code_id_assoc($array)
+   {    
+    $assocArray = array();
+    foreach($array as $item) 
+    {
+        $assocArray[$item['code']] = $item['id'];
+    }
+    return $assocArray;
+   }
 }

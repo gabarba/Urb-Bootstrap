@@ -109,6 +109,7 @@ return array(
 		'Cartalyst\Sentry\SentryServiceProvider',
 		'Profiler\ProfilerServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
+		'Frozennode\Administrator\AdministratorServiceProvider',
 
 
 	),

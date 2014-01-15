@@ -1,12 +1,12 @@
-@extends('admin.layouts.base')
 
-@section('content')
+<div id="admin_page">
+<div id="content">
  @if($errors) 
                @foreach($errors->all() as $error)
                         <div class="alert alert-danger">{{$error}}</div>
                @endforeach
         @endif
-@if($hasFile)
+@if(isset($hasFile))
 	File Recieved and Import Process Started	
 @endif
 	<h1>Import CSV File </h1>
@@ -29,4 +29,6 @@
 	{{Form::close()}}
 	</div>
 </div>
-@stop
+
+</div>
+</div>

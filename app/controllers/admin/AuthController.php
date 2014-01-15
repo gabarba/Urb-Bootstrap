@@ -30,12 +30,12 @@ class AuthController extends BaseController {
 
                         if ($user)
                         {
-                                return Redirect::route('admin.pages.index');
+                                return Redirect::route('admin.products');
                         }
                 }
                 catch(\Exception $e)
                 {
-                        return Redirect::route('admin.login')->withErrors(array('login' => $e->getMessage()));
+                        return Redirect::route('admin_dashboard')->withErrors(array('login' => $e->getMessage()));
                 }
         }
 

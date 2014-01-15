@@ -11,7 +11,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
-            <li><a href="#products">Products  </a></li>
+            <li><a href="{{ URL::route('products.index') }}">Products  </a></li>
             <li><a href="#reviews">Reviews</a></li>
           </ul>
         </div><!--/.navbar-collapse -->
