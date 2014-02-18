@@ -100,7 +100,7 @@ function returnCategoryTree($cat_id = 0)
         }
         return array_values(array_filter($categoryTree));
      }
-
+/*
 function generateMenu(array $menu,)
 	{
 		$output = '';
@@ -109,3 +109,4 @@ function generateMenu(array $menu,)
 
 		}
 	}
+    */

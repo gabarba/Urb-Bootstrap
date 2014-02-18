@@ -37,7 +37,7 @@ Route::get('/', array('as'=>'index',function()
 	$adminGroup = Sentry::getGroupProvider()->findByName('Admin');
 	$adminUser->addGroup($adminGroup);
 	*/
-
+	return Product::where('sku','PAMA-WO-M-DDS-COMBO')->first()->attributes()->wherePivot('value','PAMA-WO-M-DDS-COMBO')->get();
 	//return View::make('pages.index');
 	//return Product::all(array('id','name'));
 	//return Category::find(1)->returnCategoryTree();
