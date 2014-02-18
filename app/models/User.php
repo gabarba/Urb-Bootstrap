@@ -3,8 +3,11 @@
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 
-class User extends Eloquent implements UserInterface, RemindableInterface {
+class User extends \LaravelBook\Ardent\Ardent implements UserInterface, RemindableInterface {
 
+	public static $passwordAttributes = array('password');
+
+  	public $autoHashPasswordAttributes = true;
 	/**
 	 * The database table used by the model.
 	 *

@@ -19,8 +19,8 @@ class CreateProductsTable extends Migration {
 			$table->string('brand');
 			$table->string('manufacturer_part_no');
 			$table->string('sku')->unique(); 
-			$table->string('asin')
-			$table->string('upc_isbn')
+			$table->string('asin');
+			$table->string('upc_isbn');
 			$table->text('description');
 			$table->timestamps();
 			$table->softDeletes();

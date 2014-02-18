@@ -18,6 +18,7 @@ class CreateCategoryTable extends Migration {
 			$table->string('name');
 			$table->text('description')->nullable();
 			$table->boolean('status');
+			$table->integer('parent_cat_id')->nullable();
 			$table->timestamps();
 		});
 	}

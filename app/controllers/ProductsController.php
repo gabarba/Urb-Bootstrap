@@ -16,17 +16,16 @@ class ProductsController extends BaseController {
                 
         }
  
-        public function show($id)
+        public function show($product)
         {
-                if (Sentry::check()) 
-                {
-                        return \View::make('products.show')->with('product', Product::with('attributes.attribute')->where('id',$id)->first());
-                }
-                else 
-                {
-                       return \View::make('products.show')->with('product',Product::with('attributes.attribute')->where('id',$id)->first());
-                }
-                
+            if(is_numeric($product)) 
+            {
+                return \View::make('products.show')->with('product',Product::with('attributes.attribute')->where('id',$product)->first());   
+            } else 
+            {
+                return \View::make('products.show')->with('product',Product::with('attributes.attribute')->where('sku',$product)->first());   
+            }
+                      
         }
  
         public function create()

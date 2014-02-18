@@ -25,5 +25,9 @@ class Review extends Eloquent {
 	 public function product(){
 	 	return $this->belongsTo('product');
 	 }
+
+	 public function user(){
+	 	return $this->belongsTo('user');
+	 }
 	 
 }

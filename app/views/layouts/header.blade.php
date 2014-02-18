@@ -16,6 +16,7 @@
         <meta name="keywords" content="{{ $page->meta_keywords}}">
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="{{URL::asset('css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{URL::asset('css/ui.dynatree.css') }}">
         <style>
             body {
                 padding-top: 75px;

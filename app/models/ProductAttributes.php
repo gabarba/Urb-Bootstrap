@@ -10,6 +10,6 @@ class ProductAttributes extends Eloquent {
 
 	 public function values() 
 	 {
-	 	return $this->hasMany('ProductEav');
+	 	return $this->hasMany('ProductEav','product_attribute_id');
 	 }
 }

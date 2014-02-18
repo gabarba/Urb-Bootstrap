@@ -52,8 +52,8 @@ return array(
 	 *	)
 	 */
 	'menu' => array(
-		'Product Management' => array('products','product_images','product_eav','product_attributes'),
-		'Review Management' => array('view_reviews','flagged_reviews','need_approval'),
+		'Product Management' => array('products','product_images','product_eav','product_attributes','categories'),
+		'Review Management' => array('reviews','flagged-reviews','reviews-need-approval'),
 		'pages',
 		'Settings' => array('Product Import' =>'page.admin.import.index','settings.import_attributes','users','roles','settings.site_settings')
 		),
@@ -103,7 +103,7 @@ return array(
 	 *
 	 * @type string
 	 */
-	'logout_path' =>false,
+	'logout_path' =>'logout',
 
 	/**
 	 * This is the key of the return path that is sent with the redirection to your login_action. Input::get('redirect') will hold the return URL.

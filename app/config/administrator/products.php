@@ -37,6 +37,11 @@ return array(
 		'sku',
 		'asin',
 		'upc_isbn',
+		'categories' => array(
+			'title' => 'Categories',
+			'type' => 'relationship',
+			'name_field' => 'name'
+			),
 		'description' => array(
 			'title'=>'Description',
 			'type' =>'wysiwyg'
@@ -47,7 +52,12 @@ return array(
 		'name',
 		'brand',
 		'manufacturer_part_no',
-		'sku'
+		'sku',
+		'categories' => array(
+			'title' => 'Categories',
+			'type' => 'relationship',
+			'name_field' => 'name'
+			)
 	),
 	/*
 	* Form Width

@@ -38,18 +38,22 @@ Route::get('/', array('as'=>'index',function()
 	$adminUser->addGroup($adminGroup);
 	*/
 
-	//return View::make('pages.index');
+	return View::make('pages.index');
+	//return Product::all(array('id','name'));
+	//return Category::find(1)->returnCategoryTree();
 	//return Product::with('attributes.attribute')->where('id',1)->get(); 
 	//return Product::find(1)->attributesToArray();
 	//return ProductAttributes::all()->lists('code');
 	//return array_merge(Product::find(1)->returnFillable(),ProductAttributes::all()->lists('code'));
-	return ProductAttributes::all(array('id','code'));
+	//return ProductAttributes::all(array('id','code'));
 }));
 
 ///////////////////////// PUBLIC ROUTES ////////////////////////////////////////////////////////////////
-
-// Page Routes
-Route::get('pages/{id}', array('as' => 'pages.show', 'uses' => 'App\Controllers\PagesController@show'));
+Route::get('categoriesjson', array('as'=>'categories.json','uses' =>'CategoryController@returnCategoryTreeJson'));
+Route::get('categories', array('as'=>'categories.jquery','uses' =>'CategoryController@categoryTreeJquery'));
+Route::controller('eyepieces','EyepiecesController');
+// index Routes
+Route::get('pages/{product}', array('as' => 'pages.show', 'uses' => 'App\Controllers\PagesController@show'));
 
 // Product Routes
 Route::get('products', array('as' =>'products.index', 'uses' =>'ProductsController@index'));
@@ -59,7 +63,7 @@ Route::get('products/{id}', array('as' =>'products.show', 'uses' =>'ProductsCont
 Route::get('logout',  array('as' => 'admin.logout',      'uses' => 'App\Controllers\Admin\AuthController@getLogout'));
 Route::get('login',   array('as' => 'admin.login',       'uses' => 'App\Controllers\Admin\AuthController@getLogin'));
 Route::post('login',  array('as' => 'admin.login.post',  'uses' => 'App\Controllers\Admin\AuthController@postLogin'));
-
+Route::controller('import','ImportController');
 
 ///////////////////////// ADMIN ROUTES ////////////////////////////////////////////////////////////////
 
@@ -70,10 +74,23 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.admin'), function()
         //Route::resource('reviews',     				'App\Controllers\ReviewsController');
         //Route::resource('pages',       				'App\Controllers\PagesController');
        	//Route::resource('product-attributes',       'App\Controllers\ProductAttributesController');
-       	Route::controller('import',                 'ImportController');
+       	
 });
 
 
 
 // App Error Routes
 
+
+
+////////////////////////////////////////////////////////////////////////////
+// View Composers (Will need to relocate this code else where in the future)
+////////////////////////////////////////////////////////////////////////////
+
+
+// Retrieve category tree for all views
+View::composer('*', function($view) 
+{
+	
+       $view->with('categories',returnCategoryTree());
+});

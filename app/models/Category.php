@@ -14,7 +14,7 @@ class Category extends Eloquent {
 	*
 	* @var boolean
 	*/
-	 protected $softDelete = true;
+	 protected $softDelete = false;
 
 
 	 /**
@@ -25,7 +25,12 @@ class Category extends Eloquent {
 
 	 public function products() 
 	 {
-	 	return $this->belongsToMany('Product');
+	 	return $this->belongsToMany('Product', 'category_products');
 	 }
 
+
+	public function returnChildrenCategories()
+	{
+		return $this->where('parent_cat_id',$this->id)->where('status',1)->get(); //Pull Child Categories
+	}
 }
