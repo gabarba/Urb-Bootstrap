@@ -38,7 +38,7 @@ Route::get('/', array('as'=>'index',function()
 	$adminUser->addGroup($adminGroup);
 	*/
 
-	return View::make('pages.index');
+	//return View::make('pages.index');
 	//return Product::all(array('id','name'));
 	//return Category::find(1)->returnCategoryTree();
 	//return Product::with('attributes.attribute')->where('id',1)->get(); 

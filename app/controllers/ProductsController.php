@@ -54,8 +54,8 @@ class ProductsController extends BaseController {
         {
                 $Product = Product::find($id);
                 /*
-                $Product->name = Input::get('name');
-                $Product->brand = Input::get('brand');
+                $Product->name = Input::get('name')
+;                $Product->brand = Input::get('brand');
                 $Product->manufacturer_part_no = Input::get('manufacturer_part_no');
                 $Product->sku = Input::get('sku');
                 $Product->asin = Input::get('asin');

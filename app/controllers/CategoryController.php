@@ -32,6 +32,7 @@ class CategoryController extends BaseController {
         return array_values(array_filter($categoryTree));
      }
 
+    
     public function returnCategoryTreeJson() 
     {
         return Response::json(array_values($this->returnCategoryTree()));

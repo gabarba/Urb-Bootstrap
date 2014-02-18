@@ -1,7 +1,7 @@
 <?php 
 
 
-class Eyepieces extends Product {
+class Eyepieces extends Product implements {
 
 	// List of all eyepiece related attributes 
 	protected static $eyepieceAttributes = array(

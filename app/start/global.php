@@ -95,16 +95,17 @@ function returnCategoryTree($cat_id = 0)
                                                 //'children' => array_values($this->returnCategoryTree($category->id))
                                                 'children' => returnCategoryTree($category->id)
                                            );
-                /*
-                $children = $this->returnCategoryTree($category->id); // find children categories
-
-                if($children) 
-                {
-                    $categoryTree[$category->id]['children'] = $children;
-                }
-            */
             }
         
         }
         return array_values(array_filter($categoryTree));
      }
+
+function generateMenu(array $menu,)
+	{
+		$output = '';
+		foreach($menu as $key=>$item) 
+		{
+
+		}
+	}
