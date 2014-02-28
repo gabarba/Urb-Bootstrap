@@ -29,7 +29,7 @@
 			"php artisan optimize",
 			"php artisan migrate --package=cartalyst/sentry",
 			"php artisan config:publish cartalyst/sentry",
-			"php artisan asset:publish frozennode/administrator",
+			"php artisan asset:publish frozennode/administrator"
 		],
 		"post-update-cmd": [
 			"php artisan clear-compiled",

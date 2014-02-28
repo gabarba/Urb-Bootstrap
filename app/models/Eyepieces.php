@@ -1,8 +1,16 @@
 <?php 
 
 
-class Eyepieces extends Product implements {
-
+class Eyepieces extends Product {
+/*
+	protected  $appends = array(
+			'ca_ep_focallength_bucket',
+			'ca_ep_fov_bucket',
+			'ca_ep_series_bucket',
+			'manufacturer',
+			'ca_ep_barrelsize'
+		);
+		*/
 	// List of all eyepiece related attributes 
 	protected static $eyepieceAttributes = array(
 			'ca_ep_afov' => 'Apparent Field of View (Mfg Specified)',
@@ -42,11 +50,52 @@ class Eyepieces extends Product implements {
 			'ca_ep_focallength_bucket',
 			'ca_ep_fov_bucket',
 			'ca_ep_series_bucket',
-			'manufacturer'
+			'manufacturer',
+			'ca_ep_barrelsize'
 		);
-
+	public function scopeEyepieces($query)
+	{
+		$query->whereHas('categories', function($q)
+		{
+			$q->where('name','Eyepieces');
+		});
+		return $query;
+	}
 	public static function getEyepieceAttributesForFilter() 
 	{
 		return self::$eyepieceAttributesForFilter;
 	}
+
+	public static function getEyepieceAttributes() 
+	{
+		return self::$eyepieceAttributes;
+	}
+
+	public function withAttributes(array $attributes = array())
+	{
+		if(!Cache::has($this->id.'_eyepiece_attributes')) 
+		{
+			foreach($attributes as $key) 
+			{
+				$this->setRelation($key,$this->getAttributeValueByCode($key));
+			}
+			Cache::forever($this->id.'_eyepiece_attributes',$this->getRelations());
+		}else {
+			$this->setRelations(Cache::get($this->id.'_eyepiece_attributes'));
+		}
+		
+	
+	}
+	public function toArray()
+	{
+		$attributes = $this->attributesToArray();
+
+		return array_merge($attributes, $this->relationsToArray(),$this->relations);
+	}
+/*
+	public function getCaEpAfovAttribute() 
+	{
+		return $this->getAttributeValueByCode('ca_ep_afov');
+	}
+	*/
 }

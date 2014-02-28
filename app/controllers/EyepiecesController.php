@@ -5,27 +5,15 @@ class EyepiecesController extends BaseController {
 
 	protected $eyepieceCollection = null; 
 
-	public function getIndex()
+	public function index()
         {
         	// Retrieve all products within the Eyepiece Category
-            $eyepieces = Category::where('name','Eyepieces')->first()->products();
 
-           $queryParam = Input::only(Eyepieces::getEyepieceAttributesForFilter());
-             if(Input::has('sku'))
-             {
-             	if(is_array(Input::get('sku'))) 
-             	{
-             		foreach(Input::get('sku') as $sku) 
-             		{
-             			$eyepieces->orWhere('sku',$sku);
-             		}
-             	}
-             	else 
-             	{
-             		$eyepieces->where('sku',Input::get('sku'));
-             	}
-             }
-             return $eyepieces->get();
+            $attributes = Input::only(Eyepieces::getEyepieceAttributesForFilter());
+                        
+                var_dump($attributes);
+            $eyepieces = Product::Eyepieces()->FilterByAttributes(array_filter($attributes))->paginate(20);
+            return \View::make('products.index')->with('products', $eyepieces)->with('attributes',$attributes);
         }
  
         public function show($product)

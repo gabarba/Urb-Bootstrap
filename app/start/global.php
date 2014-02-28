@@ -84,7 +84,7 @@ function returnCategoryTree($cat_id = 0)
      {
         $categoryTree = array();
 
-        $categories = Category::where('status',1)->where('parent_cat_id',$cat_id)->get();
+        $categories = Category::where('status',1)->where('parent_cat_id',$cat_id)->remember(1)->get();
         if($categories) 
         {
             foreach($categories as $category) 

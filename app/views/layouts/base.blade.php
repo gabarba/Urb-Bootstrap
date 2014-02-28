@@ -19,17 +19,14 @@
       @include('layouts.navigation')
 
       
+      
       <div class="container">
+        @include('navigation.filter')
+        
          @yield('content')
       </div>
 
-      <div id="angular-sample-app" ng-app="sampleApp">
-        <p>Sample Binding <%1+2%></p>
-            <table>
-      <tr><th>row number</th></tr>
-      <tr ng-repeat="i in [0, 1, 2, 3, 4, 5, 6, 7]"><td><%i%></td></tr>
-    </table>
-      </div>
+      
 
       <footer>
         <p>&copy; URB Reviews Platform 2013</p>

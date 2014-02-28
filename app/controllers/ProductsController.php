@@ -5,13 +5,18 @@ class ProductsController extends BaseController {
  
         public function index()
         {
-                if (Sentry::check()) 
+                //if (Sentry::check()) 
+                if(false) // Turn Sentry Off Temporarily
                 {
                         return \View::make('admin.products.index')->with('products', Product::all());
                 }
                 else 
                 {
-                        return \View::make('products.index')->with('products', Product::all());
+                        $attributes = Input::only(Eyepieces::getEyepieceAttributesForFilter());
+                        var_dump($attributes);
+                        $products = Eyepieces::FilterByAttributes(array_filter($attributes))->paginate(20);
+                        return \View::make('products.index')->with('products', $products)->with('attributes',$attributes);
+                        //return \View::make('products.index')->with('products', Product::paginate(20));
                 }
                 
         }
@@ -20,10 +25,10 @@ class ProductsController extends BaseController {
         {
             if(is_numeric($product)) 
             {
-                return \View::make('products.show')->with('product',Product::with('attributes.attribute')->where('id',$product)->first());   
+                return \View::make('products.show')->with('product',Product::with('attributes')->where('id',$product)->first());   
             } else 
             {
-                return \View::make('products.show')->with('product',Product::with('attributes.attribute')->where('sku',$product)->first());   
+                return \View::make('products.show')->with('product',Product::with('attributes')->where('sku',$product)->first());   
             }
                       
         }

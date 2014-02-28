@@ -25,6 +25,7 @@ class Product extends \LaravelBook\Ardent\Ardent {
 	*/
 	 protected $fillable = array('name', 'brand', 'manufacturer_part_no','sku','asin','upc_isbn','description');
 
+
 	 public function returnFillable() 
 	 {
 	 	return $this->fillable;
@@ -46,6 +47,7 @@ class Product extends \LaravelBook\Ardent\Ardent {
 	  public $autoHydrateEntityFromInput = true; // hydrates on new entries' validation
 	  public $forceEntityHydrationFromInput = true; // hydrates whenever validation is called
 	  public $autoPurgeRedundantAttributes = true;
+
 
 	 /**
 	 * Retrieve related product reviews
@@ -72,12 +74,59 @@ class Product extends \LaravelBook\Ardent\Ardent {
 	 {
 	 	return $this->belongsToMany('ProductAttributes','product_eav','product_id','product_attribute_id')->withPivot('id','value');
 	 }
-	 /*
-	 public function attributes() 
+	 
+	 /**
+	 * Filter Products based on attributes 
+	 *@param $query - Eloquen Query Model
+	 *@param $attributes - array of attributes and values to be filtered by 
+	 *@return collection of filtered products by Attribute
+	 */
+	 public function scopeFilterByAttributes($query,array $attributes = array())
 	 {
-	 	return $this->hasMany('ProductEav','product_id');
+	 	foreach($attributes as $attributeCode => $value) 
+	 	{
+	 		$query->whereHas('attributes', function($q) use ($attributeCode,$value)
+	 		{ 
+	 			if(is_array($value))
+	 			{
+	 					$q->where('code',$attributeCode)->whereIn('value',$value);
+	 				
+	 			}else
+	 			{
+	 				$q->where('code',$attributeCode)->where('value',$value);
+	 			}
+	 			
+			});
+	 	}
+	 	
+		return $query;
 	 }
-	*/
+
+	 
+
+	 
+	 public function getAttributeValueByCode($code = null)
+	 {
+	 	if($code)
+	 	{
+	 		return Cache::rememberForever($this->id.'_'.$code, function() use ($code)
+	 			{
+	 				$value = $this->attributes()->where('code',$code)->first();
+	 				return isset($value->value) ? $value->value : false;//'N/A';
+	 			}
+	 		);
+	 	}
+	 	return $code;
+	 }
+
+	public function scopeEyepieces($query)
+	{
+		$query->whereHas('categories', function($q)
+		{
+			$q->where('name','Eyepieces');
+		});
+		return $query;
+	}
 
 	 // Update Ardent Save function to always apply save on update for unique validation to fix FrozenNode/Administrator packages
 	 // that only uses the save method.

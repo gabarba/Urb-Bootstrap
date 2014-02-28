@@ -1,7 +1,7 @@
 @extends('layouts.base')
  
 @section('content')
-    
+    <div class="col-md-9">
     @if($product)
         <h1>{{$product->name}}</h1>
 
@@ -19,7 +19,7 @@
                 <tbody>
                         @foreach ($product->attributes as $spec)
                                 <tr>
-                                        <td>{{ $spec->attribute->name }}</td>
+                                        <td>{{ $spec->name }}</td>
                                         <td>{{$spec->value}}</td>
                                        
                                 </tr>
@@ -27,5 +27,6 @@
                 </tbody>
         </table>
         </div>
+    </div>
     @endif
 @stop
