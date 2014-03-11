@@ -23,8 +23,9 @@ Route::get('/', array('as'=>'index',function()
 {	
 	//return Cache::get('2351_id');
 	//return Product::find(2351)->getAttributeValueByCode(snake_case('ca_ebay_store_cat_1'));
-	$products = Product::where('sku','LIKE','%E-%')->where('name','LIKE','%eyepiece%')->get()->each(function($product) {$product->categories()->attach(10);});
-	return $products;
+	return ProductEAV::join('product_attributes','product_attributes.id','=','product_attribute_id')->whereIn('product_id',array(2348,2347,2346))->whereIn('product_attribute_id',array(211,110,229,222,218))->orderBy('product_attribute_id')->groupBy('value')->get(array('product_attribute_id','product_attributes.code','value',DB::raw('count(*) as count')));//->toJSON();
+	//$products = Product::where('sku','LIKE','%E-%')->where('name','LIKE','%eyepiece%')->get()->each(function($product) {$product->categories()->attach(10);});
+	//return $products;
 	/*
 	$eyepiece = Eyepieces::take(500)->get()->each(function($eyepiece)
 		{
