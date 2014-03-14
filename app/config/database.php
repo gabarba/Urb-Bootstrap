@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'laravel-bootstrap',
+			'database'  => 'astronomy-connect',
 			'username'  => 'root',
 			'password'  => '',
 			'charset'   => 'utf8',
